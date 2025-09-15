@@ -85,7 +85,7 @@ impl<T> List<T> {
                     self.tail = Some(new_tail);
                 }
                 None => {
-                    self.head .take();
+                    self.head.take();
                 }
             }
             Rc::try_unwrap(old_tail).ok().unwrap().into_inner().elem
@@ -105,8 +105,8 @@ impl<T> List<T> {
 
     pub fn peek_front_mut<'a>(&'a mut self) -> Option<RefMut<'a, T>> {
         self.head
-        .as_ref()
-        .map(|node| RefMut::map(node.borrow_mut(), |node| &mut node.elem))
+            .as_ref()
+            .map(|node| RefMut::map(node.borrow_mut(), |node| &mut node.elem))
     }
     pub fn peek_back_mut<'a>(&'a mut self) -> Option<RefMut<'a, T>> {
         self.tail
@@ -119,7 +119,7 @@ impl<T> List<T> {
     }
 }
 
-impl <T> Iterator for IntoIter<T> {
+impl<T> Iterator for IntoIter<T> {
     type Item = T;
     fn next(&mut self) -> Option<Self::Item> {
         self.0.pop_front()
@@ -217,7 +217,9 @@ mod test {
     #[test]
     fn into_iter() {
         let mut list = List::new();
-        list.push_front(1); list.push_front(2); list.push_front(3);
+        list.push_front(1);
+        list.push_front(2);
+        list.push_front(3);
 
         let mut iter = list.into_iter();
         assert_eq!(iter.next(), Some(3));
